@@ -1,0 +1,9 @@
+.Board {
+    width: 80vh;
+    height: 80vh;
+    background-color: black;
+
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+}
+
