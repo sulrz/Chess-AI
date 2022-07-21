@@ -7,7 +7,7 @@ function Tile(props) {
         "Tile white" : "Tile black";
 
     return (
-        <div className={className}>
+        <div className={className} onClick={props.onClick}>
             <img className="Piece" src={props.image} />
         </div>
     );

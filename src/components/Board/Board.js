@@ -18,47 +18,47 @@ function initPieces() {
     const newPieces = [];
     const imagesPath = "./images/";
 
-    for (let i = 0; i < rowsAmount; i++) {
-        if (i != 1 && i != rowsAmount - 2) continue;
+    for (let y = 0; y < rowsAmount; y++) {
+        if (y != 1 && y != rowsAmount - 2) continue;
         
-        let allience = i == 1 ? "b_" : "w_";
+        let allience = y == 1 ? "b_" : "w_";
         allience = imagesPath + allience;
-        for (let j = 0; j < columnsAmount; j++) {
-            newPieces.push(new Piece(j, i, allience + "pawn.png"));
+        for (let x = 0; x < columnsAmount; x++) {
+            newPieces.push(new Piece(x, y, allience + "pawn.png"));
         }
     }
 
-    for (let i = 0; i < rowsAmount; i++) {
-        if (i != 0 && i != rowsAmount - 1) continue;
+    for (let y = 0; y < rowsAmount; y++) {
+        if (y != 0 && y != rowsAmount - 1) continue;
 
-        let allience = i == 0 ? "b_" : "w_";
+        let allience = y == 0 ? "b_" : "w_";
         allience = imagesPath + allience;
-        for (let j = 0; j < columnsAmount; j++) {
+        for (let x = 0; x < columnsAmount; x++) {
 
-            switch (j) {
+            switch (x) {
                 case 0: case 7:
                     // black rook
-                    newPieces.push(new Piece(j, i, allience + "rook.png"));
+                    newPieces.push(new Piece(x, y, allience + "rook.png"));
                     break;
 
                 case 1: case 6:
                     // black knight
-                    newPieces.push(new Piece(j, i, allience + "knight.png"));
+                    newPieces.push(new Piece(x, y, allience + "knight.png"));
                     break;
 
                 case 2: case 5:
                     // black bishop
-                    newPieces.push(new Piece(j, i, allience + "bishop.png"));
+                    newPieces.push(new Piece(x, y, allience + "bishop.png"));
                     break;
 
                 case 3:
                     // black queen
-                    newPieces.push(new Piece(j, i, allience + "queen.png"));
+                    newPieces.push(new Piece(x, y, allience + "queen.png"));
                     break;
 
                 case 4:
                     // black king
-                    newPieces.push(new Piece(j, i, allience + "king.png"));
+                    newPieces.push(new Piece(x, y, allience + "king.png"));
                     break;
 
                 default:
@@ -75,13 +75,23 @@ function Board() {
 
     const [pieces, setPieces] = React.useState(initPieces());
 
-    for (let i = 0; i < rowsAmount; i++) {
-        for (let j = 0; j < columnsAmount; j++) {
+    function onclick(x, y) {
+        setPieces(prevState => prevState.map(piece => {
+            if (x === piece.x && y === piece.y) {
+                piece.y++;
+                return piece;
+            }
+            return piece;
+        }));
+    }
+
+    for (let y = 0; y < rowsAmount; y++) {
+        for (let x = 0; x < columnsAmount; x++) {
             const piece = pieces.filter(piece => 
-                piece.x === j && piece.y === i
+                piece.x === x && piece.y === y
             )[0];
             
-            board.push(<Tile coordinate={i+j} image={piece ? piece.image : ""} />);
+            board.push(<Tile coordinate={y+x} image={piece ? piece.image : ""} onClick={() => onclick(x, y)}/>);
         }
     }
 
