@@ -1,7 +1,21 @@
-.Tile-black {
+
+.Tile {
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+}
+
+.black {
     background-color: #7C4C3E;
 }
 
-.Tile-white {
+.white {
     background-color: #595959;
+}
+
+.Piece {
+    transform: translate(0, 15%);
+
+    height: 80%;
 }

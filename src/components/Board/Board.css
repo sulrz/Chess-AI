@@ -1,9 +1,11 @@
 .Board {
-    width: 80vh;
-    height: 80vh;
+    width: min(85vw, 85vh);
+    height: min(85vw, 85vh);
+
     background-color: black;
 
     display: grid;
     grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: repeat(8, 12.5%);
 }
 
