@@ -6,64 +6,59 @@ const rowsAmount = 8;
 const columnsAmount = 8;
 
 class Piece {
-    constructor(x, y, image) {
+    constructor(x, y, allience, pieceName) {
         this.x = x;
         this.y = y;
-        this.image = image;
+        this.allience = allience;
+        this.pieceName = pieceName;
+
+        const imagesPath = "./images/";
+        this.image = `${imagesPath}${allience}_${pieceName}.png`;
     }
 };
 
 // initiating all the pieces
 function initPieces() {
     const newPieces = [];
-    const imagesPath = "./images/";
 
     for (let y = 0; y < rowsAmount; y++) {
         if (y !== 1 && y !== rowsAmount - 2) continue;
         
-        let allience = y === 1 ? "b_" : "w_";
-        allience = imagesPath + allience;
+        let allience = y === 1 ? "b" : "w";
+        let pieceName = "pawn";
+
         for (let x = 0; x < columnsAmount; x++) {
-            newPieces.push(new Piece(x, y, allience + "pawn.png"));
+            newPieces.push(new Piece(x, y, allience, pieceName));
         }
     }
 
     for (let y = 0; y < rowsAmount; y++) {
         if (y !== 0 && y !== rowsAmount - 1) continue;
 
-        let allience = y === 0 ? "b_" : "w_";
-        allience = imagesPath + allience;
+        let allience = y === 0 ? "b" : "w";
+        let pieceName;
+        
         for (let x = 0; x < columnsAmount; x++) {
-
             switch (x) {
                 case 0: case 7:
-                    // black rook
-                    newPieces.push(new Piece(x, y, allience + "rook.png"));
+                    pieceName = "rook";
                     break;
-
                 case 1: case 6:
-                    // black knight
-                    newPieces.push(new Piece(x, y, allience + "knight.png"));
+                    pieceName = "knight";
                     break;
-
                 case 2: case 5:
-                    // black bishop
-                    newPieces.push(new Piece(x, y, allience + "bishop.png"));
+                    pieceName = "bishop";
                     break;
-
                 case 3:
-                    // black queen
-                    newPieces.push(new Piece(x, y, allience + "queen.png"));
+                    pieceName = "queen";
                     break;
-
                 case 4:
-                    // black king
-                    newPieces.push(new Piece(x, y, allience + "king.png"));
+                    pieceName = "king";
                     break;
-
                 default:
                     break;
             }
+            newPieces.push(new Piece(x, y, allience, pieceName));
         }
     }
 
