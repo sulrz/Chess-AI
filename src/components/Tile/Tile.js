@@ -7,7 +7,7 @@ function Tile(props) {
         "Tile white" : "Tile black";
 
     if (props.isCandidate)
-        className = "Tile red";
+        className = "Tile path";
 
     return (
         <div 

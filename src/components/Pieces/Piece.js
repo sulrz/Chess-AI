@@ -33,7 +33,7 @@ class Piece {
     }
 
     isColumnNumberN(n, index) {
-        return index % 8 == n - 1;
+        return index % 8 === n - 1;
     }
     
     isWhite() {
@@ -46,6 +46,10 @@ class Piece {
 
     getDirection() {
         return this.isWhite() ? -1 : 1;
+    }
+
+    move() {
+        this.firstMove = false;
     }
 }
 

@@ -38,7 +38,7 @@ class Pawn extends Piece {
                 continue;
             }
 
-            if (Math.abs(moveOffsets[i] == 7) && 
+            if (Math.abs(moveOffsets[i]) === 7 && 
                 !((this.isColumnNumberN(1, position) && this.isBlack()) ||
                  (this.isColumnNumberN(8, position) && this.isWhite()))) {
                 
@@ -51,9 +51,9 @@ class Pawn extends Piece {
                 continue;
             }
 
-            if (Math.abs(moveOffsets[i] == 9) &&
+            if (Math.abs(moveOffsets[i]) === 9 &&
                 !((this.isColumnNumberN(1, position) && this.isWhite()) ||
-                (this.isColumnNumberN(8, position) && this.isBlack()))) {
+                 (this.isColumnNumberN(8, position) && this.isBlack()))) {
 
                 if (candidateTile !== null && 
                     candidateTile.getAlliance() !== this.getAlliance()) {

@@ -24,7 +24,7 @@ function BoardInit() {
 
         let alliance = i === 1 ? "b" : "w";
 
-        for (let j = 5; j < columnsAmount; j++) {
+        for (let j = 0; j < columnsAmount; j++) {
             newBoard[i*columnsAmount + j] = new Pawn(alliance);
         }
     }
