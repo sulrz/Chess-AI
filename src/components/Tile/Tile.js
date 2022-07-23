@@ -8,7 +8,10 @@ function Tile(props) {
 
     return (
         <div className={className} onClick={props.onClick}>
-            <img className="Piece" src={props.image} />
+            {
+                props.image !== null &&
+                <img className="Piece" src={props.image} alt="" />
+            }
         </div>
     );
 }

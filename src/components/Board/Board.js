@@ -19,9 +19,9 @@ function initPieces() {
     const imagesPath = "./images/";
 
     for (let y = 0; y < rowsAmount; y++) {
-        if (y != 1 && y != rowsAmount - 2) continue;
+        if (y !== 1 && y !== rowsAmount - 2) continue;
         
-        let allience = y == 1 ? "b_" : "w_";
+        let allience = y === 1 ? "b_" : "w_";
         allience = imagesPath + allience;
         for (let x = 0; x < columnsAmount; x++) {
             newPieces.push(new Piece(x, y, allience + "pawn.png"));
@@ -29,9 +29,9 @@ function initPieces() {
     }
 
     for (let y = 0; y < rowsAmount; y++) {
-        if (y != 0 && y != rowsAmount - 1) continue;
+        if (y !== 0 && y !== rowsAmount - 1) continue;
 
-        let allience = y == 0 ? "b_" : "w_";
+        let allience = y === 0 ? "b_" : "w_";
         allience = imagesPath + allience;
         for (let x = 0; x < columnsAmount; x++) {
 
@@ -91,7 +91,7 @@ function Board() {
                 piece.x === x && piece.y === y
             )[0];
             
-            board.push(<Tile coordinate={y+x} image={piece ? piece.image : ""} onClick={() => onclick(x, y)}/>);
+            board.push(<Tile coordinate={y+x} image={piece ? piece.image : null} onClick={() => onclick(x, y)}/>);
         }
     }
 
