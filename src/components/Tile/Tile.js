@@ -6,6 +6,9 @@ function Tile(props) {
     className = props.coordinate % 2 === 0 ?
         "Tile white" : "Tile black";
 
+    if (props.isCandidate)
+        className = "Tile red";
+
     return (
         <div 
             className = {className} 

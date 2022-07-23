@@ -16,6 +16,10 @@
     background-color: #595959;
 }
 
+.red {
+    background-color: #1E7824;
+}
+
 .Piece {
     transform: translate(0, 15%);
 

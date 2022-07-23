@@ -7,7 +7,7 @@ const rowsAmount = boardData.rowsAmount;
 const columnsAmount = boardData.columnsAmount;
 
 class Board extends React.Component {
-    
+
     createTile(i, j) {
         const index = i*columnsAmount + j;
         const image = this.props.board[index] ?
@@ -19,6 +19,7 @@ class Board extends React.Component {
                 coordinate = {i + j}
                 image = {image}
                 onClick = {() => this.props.onClick(index)}
+                isCandidate = {this.props.board[index].isCandidate}
             />
         );
     }
