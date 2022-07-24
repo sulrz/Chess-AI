@@ -2,12 +2,17 @@ import React from "react";
 import "./Tile.css"
 
 function Tile(props) {
-    let className;
-    className = props.coordinate % 2 === 0 ?
-        "Tile white" : "Tile black";
+    let className = "Tile ";
+    className += props.coordinate % 2 === 0 ?
+        "white " : "black ";
 
-    if (props.isCandidate)
-        className = "Tile path";
+    if (props.isCandidate) {
+        className += "path ";
+        className += "clickable ";
+    }
+
+    if (props.image && props.canMove)
+        className += "clickable ";
 
     return (
         <div 

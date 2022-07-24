@@ -4,8 +4,6 @@
     height: 100%;
 
     text-align: center;
-
-    cursor: pointer;
 }
 
 .black {
@@ -18,6 +16,14 @@
 
 .path {
     background-color: #1E7824;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    background-color: #23AD4A;
 }
 
 .Piece {

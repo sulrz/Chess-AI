@@ -2,22 +2,50 @@ import React from 'react';
 import './App.css';
 import Board from '../Board/Board';
 import BoardInit from '../Board/BoardInit';
+import GameOverWindow from '../GameOver/GameOverWindow';
 import EmptyPiece from '../Pieces/EmptyPiece';
 
 class App extends React.Component {
   constructor() {
     super();
 
-    this.state = {
+    this.state = this.getInitialGameState();
+  }
+
+  getInitialGameState() {
+    return {
       board: BoardInit(),
+      gameOver: false,
       whiteTurn: true,
       selectedIndex: -1,
       whiteDeadPieces: [],
       blackDeadPieces: []
+    };
+  }
+
+  checkKing() {
+    let whiteKing = false;
+    let blackKing = false;
+
+    const board = this.state.board;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i].isWhite() && board[i].isKing())
+        whiteKing = true;
+      if (board[i].isBlack() && board[i].isKing())
+        blackKing = true;
+    }
+
+    if (!whiteKing || !blackKing) {
+      this.setState(prevState => ({
+        ...this.state,
+        gameOver: true
+      }));
     }
   }
 
   handleClick(index) {
+    if (this.state.gameOver) return;
+
     const selectedIndex = this.state.selectedIndex;
     const newBoard = this.state.board;
     for (let i = 0; i < newBoard.length; i++) {
@@ -79,15 +107,34 @@ class App extends React.Component {
       whiteDeadPieces: deadWhites,
       blackDeadPieces: deadBlacks
     }));
+
+    this.checkKing();
+  }
+
+  drawGameOverWindow() {
+    const winner = this.state.whiteTurn ? "White" : "Black";
+
+    return (
+      <GameOverWindow 
+        winner = {winner}
+        onClick = {this.restartGame}
+      />
+    );
+  }
+
+  restartGame = () => {
+    this.setState(this.getInitialGameState());
   }
 
   render() {
     return (
       <div className='App'>
+        {this.state.gameOver && this.drawGameOverWindow()}
         <Board 
           board = {this.state.board}
           onClick = {index => this.handleClick(index)}
-
+          gameOver = {this.state.gameOver}
+          whiteTurn = {this.state.whiteTurn}
          />
       </div>
     );

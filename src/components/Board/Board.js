@@ -13,6 +13,12 @@ class Board extends React.Component {
         const image = this.props.board[index] ?
             this.props.board[index].getImage() : undefined;
 
+        let canMove = false;
+        if (!this.props.gameOver &&
+            (this.props.whiteTurn && this.props.board[index].isWhite()) ||
+            (!this.props.whiteTurn && this.props.board[index].isBlack()))
+            canMove = true;
+
         return (
             <Tile
                 key = {`${i}, ${j}`}
@@ -20,6 +26,7 @@ class Board extends React.Component {
                 image = {image}
                 onClick = {() => this.props.onClick(index)}
                 isCandidate = {this.props.board[index].isCandidate}
+                canMove = {canMove}
             />
         );
     }

@@ -43,6 +43,10 @@ class King extends Piece {
             return true;
         return false;
     }
+
+    isKing() {
+        return true;
+    }
 }
 
 export default King;

@@ -51,6 +51,10 @@ class Piece {
     move() {
         this.firstMove = false;
     }
+
+    isKing() {
+        return false;
+    }
 }
 
 export default Piece;
