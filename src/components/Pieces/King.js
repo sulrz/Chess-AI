@@ -1,4 +1,5 @@
 import Piece from "./Piece";
+import BoardUtils from "../Board/BoardUtils";
 
 class King extends Piece {
     constructor (alliance) {
@@ -17,7 +18,7 @@ class King extends Piece {
         for (let i = 0; i < moveOffsets.length; i++) {
             const candidateMove = position + moveOffsets[i];
 
-            if (!this.isValidMove(board, candidateMove))
+            if (!BoardUtils.isValidMove(candidateMove))
                 continue;
 
             if (this.isExclusion(position, moveOffsets[i]))
@@ -38,8 +39,8 @@ class King extends Piece {
     }
 
     isExclusion(position, moveOffset) {
-        if ((this.isColumnNumberN(1, position) && (moveOffset === -9 || moveOffset === -1 || moveOffset === 7)) ||
-            (this.isColumnNumberN(8, position) && (moveOffset === -7 || moveOffset === 1 || moveOffset === 9)))
+        if ((BoardUtils.isColumnNumberN(1, position) && (moveOffset === -9 || moveOffset === -1 || moveOffset === 7)) ||
+            (BoardUtils.isColumnNumberN(8, position) && (moveOffset === -7 || moveOffset === 1 || moveOffset === 9)))
             return true;
         return false;
     }

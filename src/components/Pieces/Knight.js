@@ -1,4 +1,5 @@
 import Piece from "./Piece";
+import BoardUtils from "../Board/BoardUtils";
 
 class Knight extends Piece {
     constructor (alliance) {
@@ -17,7 +18,7 @@ class Knight extends Piece {
         for (let i = 0; i < moveOffsets.length; i++) {
             const candidateMove = position + moveOffsets[i];
 
-            if (!this.isValidMove(board, candidateMove))
+            if (!BoardUtils.isValidMove(candidateMove))
                 continue;
 
             if (this.isExclusion(position, moveOffsets[i]))
@@ -38,10 +39,10 @@ class Knight extends Piece {
     }
 
     isExclusion(position, moveOffset) {
-        if ((this.isColumnNumberN(1, position) && (moveOffset === -17 || moveOffset === -10 || moveOffset === 6 || moveOffset === 15)) ||
-            (this.isColumnNumberN(2, position) && (moveOffset === -10 || moveOffset === 6 )) ||
-            (this.isColumnNumberN(7, position) && (moveOffset === -6 || moveOffset === 10)) ||
-            (this.isColumnNumberN(8, position) && (moveOffset === -15 || moveOffset === -6 || moveOffset === 10 || moveOffset === 17)))
+        if ((BoardUtils.isColumnNumberN(1, position) && (moveOffset === -17 || moveOffset === -10 || moveOffset === 6 || moveOffset === 15)) ||
+            (BoardUtils.isColumnNumberN(2, position) && (moveOffset === -10 || moveOffset === 6 )) ||
+            (BoardUtils.isColumnNumberN(7, position) && (moveOffset === -6 || moveOffset === 10)) ||
+            (BoardUtils.isColumnNumberN(8, position) && (moveOffset === -15 || moveOffset === -6 || moveOffset === 10 || moveOffset === 17)))
             return true;
         return false;
     }

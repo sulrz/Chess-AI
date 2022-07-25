@@ -1,18 +1,15 @@
 import React from "react";
 import './Board.css';
 import Tile from "../Tile/Tile";
-import boardData from "./BoardData";
-
-const rowsAmount = boardData.rowsAmount;
-const columnsAmount = boardData.columnsAmount;
+import BoardUtils from "./BoardUtils";
 
 class Board extends React.Component {
 
     createTile(i, j) {
-        const index = i*columnsAmount + j;
+        const index = i*BoardUtils.columnsAmount + j;
         const image = this.props.board[index] ?
             this.props.board[index].getImage() : undefined;
-        const isCandidate = this.props.candidateMoves.filter(move => move === i*columnsAmount + j).length > 0;
+        const isCandidate = this.props.candidateMoves.filter(move => move === i*BoardUtils.columnsAmount + j).length > 0;
 
         let canMove = false;
         if (!this.props.gameOver &&
@@ -35,8 +32,8 @@ class Board extends React.Component {
     createBoard() {
         const board = [];
 
-        for (let i = 0; i < rowsAmount; i++) {
-            for (let j = 0; j < columnsAmount; j++) {
+        for (let i = 0; i < BoardUtils.rowsAmount; i++) {
+            for (let j = 0; j < BoardUtils.columnsAmount; j++) {
                 board.push(this.createTile(i, j))
             }
         }

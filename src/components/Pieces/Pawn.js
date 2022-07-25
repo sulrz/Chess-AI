@@ -1,4 +1,5 @@
 import Piece from "./Piece";
+import BoardUtils from "../Board/BoardUtils";
 
 class Pawn extends Piece {
     constructor (alliance) {
@@ -17,7 +18,7 @@ class Pawn extends Piece {
         for (let i = 0; i < moveOffsets.length; i++) {
             const candidateMove = position + moveOffsets[i];
 
-            if (!this.isValidMove(board, candidateMove))
+            if (!BoardUtils.isValidMove(candidateMove))
                 continue;
 
             const candidateTile = board[candidateMove];
@@ -39,8 +40,8 @@ class Pawn extends Piece {
             }
 
             if (Math.abs(moveOffsets[i]) === 7 && 
-                !((this.isColumnNumberN(1, position) && this.isBlack()) ||
-                 (this.isColumnNumberN(8, position) && this.isWhite()))) {
+                !((BoardUtils.isColumnNumberN(1, position) && this.isBlack()) ||
+                 (BoardUtils.isColumnNumberN(8, position) && this.isWhite()))) {
                 
                 if (candidateTile !== null && 
                     candidateTile.getAlliance() !== this.getAlliance()) {
@@ -52,8 +53,8 @@ class Pawn extends Piece {
             }
 
             if (Math.abs(moveOffsets[i]) === 9 &&
-                !((this.isColumnNumberN(1, position) && this.isWhite()) ||
-                 (this.isColumnNumberN(8, position) && this.isBlack()))) {
+                !((BoardUtils.isColumnNumberN(1, position) && this.isWhite()) ||
+                 (BoardUtils.isColumnNumberN(8, position) && this.isBlack()))) {
 
                 if (candidateTile !== null && 
                     candidateTile.getAlliance() !== this.getAlliance()) {

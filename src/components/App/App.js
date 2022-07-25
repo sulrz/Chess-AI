@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Board from '../Board/Board';
-import BoardInit from '../Board/BoardInit';
+import BoardUtils from '../Board/BoardUtils';
 import GameOverWindow from '../GameOver/GameOverWindow';
 
 class App extends React.Component {
@@ -13,31 +13,18 @@ class App extends React.Component {
 
   getInitialGameState() {
     return {
-      board: BoardInit(),
+      board: BoardUtils.initializeBoard(),
       gameOver: false,
       whiteTurn: true,
       selectedIndex: -1,
-      candidateMoves: [],
-      whiteDeadPieces: [],
-      blackDeadPieces: []
+      candidateMoves: []
     };
   }
 
   checkKing() {
-    let whiteKing = false;
-    let blackKing = false;
-
-    const board = this.state.board;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i]?.isWhite() && board[i].isKing())
-        whiteKing = true;
-      if (board[i]?.isBlack() && board[i].isKing())
-        blackKing = true;
-    }
-
-    if (!whiteKing || !blackKing) {
+    if (!BoardUtils.areKingsAlive(this.state.board)) {
       this.setState(prevState => ({
-        ...this.state,
+        ...prevState,
         gameOver: true
       }));
     }
@@ -69,22 +56,12 @@ class App extends React.Component {
       return;
     }
 
-    const deadWhites = this.state.whiteDeadPieces;
-    const deadBlacks = this.state.blackDeadPieces;
-
     const candidateMoves = newBoard[selectedIndex].getMoves(newBoard, selectedIndex);
     let whiteTurn = this.state.whiteTurn;
 
     for (let i = 0; i < candidateMoves.length; i++) {
       if (index !== candidateMoves[i])
         continue;
-
-      if (newBoard[index]) {
-        if (newBoard[index].isWhite())
-          deadWhites.push(newBoard[index]);
-        else
-          deadBlacks.push(newBoard[index]);
-      }
 
       newBoard[index] = newBoard[selectedIndex];
       newBoard[index].move();
@@ -98,16 +75,14 @@ class App extends React.Component {
       board: newBoard,
       whiteTurn: whiteTurn,
       selectedIndex: -1,
-      candidateMoves: [],
-      whiteDeadPieces: deadWhites,
-      blackDeadPieces: deadBlacks
+      candidateMoves: []
     }));
 
     this.checkKing();
   }
 
   drawGameOverWindow() {
-    const winner = this.state.whiteTurn ? "White" : "Black";
+    const winner = this.state.whiteTurn ? "Black" : "White";
 
     return (
       <GameOverWindow 
