@@ -3,7 +3,6 @@ import './App.css';
 import Board from '../Board/Board';
 import BoardInit from '../Board/BoardInit';
 import GameOverWindow from '../GameOver/GameOverWindow';
-import EmptyPiece from '../Pieces/EmptyPiece';
 
 class App extends React.Component {
   constructor() {
@@ -18,6 +17,7 @@ class App extends React.Component {
       gameOver: false,
       whiteTurn: true,
       selectedIndex: -1,
+      candidateMoves: [],
       whiteDeadPieces: [],
       blackDeadPieces: []
     };
@@ -29,9 +29,9 @@ class App extends React.Component {
 
     const board = this.state.board;
     for (let i = 0; i < board.length; i++) {
-      if (board[i].isWhite() && board[i].isKing())
+      if (board[i]?.isWhite() && board[i].isKing())
         whiteKing = true;
-      if (board[i].isBlack() && board[i].isKing())
+      if (board[i]?.isBlack() && board[i].isKing())
         blackKing = true;
     }
 
@@ -48,12 +48,9 @@ class App extends React.Component {
 
     const selectedIndex = this.state.selectedIndex;
     const newBoard = this.state.board;
-    for (let i = 0; i < newBoard.length; i++) {
-      newBoard[i].setIsCandidateMove(false);
-    }
 
     if (selectedIndex === -1) {
-      if (!newBoard[index].getPiece()) return;
+      if (!newBoard[index]) return;
       if (newBoard[index].isWhite() && !this.state.whiteTurn) return;
       if (newBoard[index].isBlack() &&  this.state.whiteTurn) return;
 
@@ -62,14 +59,11 @@ class App extends React.Component {
       if (!candidateMoves.length)
         return;
 
-      for (let i = 0; i < candidateMoves.length; i++) {
-        newBoard[candidateMoves[i]].setIsCandidateMove(true);
-      }
-
       this.setState(prevState => ({
         ...prevState,
         board: newBoard,
-        selectedIndex: index
+        selectedIndex: index,
+        candidateMoves: candidateMoves
       }));
 
       return;
@@ -85,7 +79,7 @@ class App extends React.Component {
       if (index !== candidateMoves[i])
         continue;
 
-      if (newBoard[index].getPiece()) {
+      if (newBoard[index]) {
         if (newBoard[index].isWhite())
           deadWhites.push(newBoard[index]);
         else
@@ -94,7 +88,7 @@ class App extends React.Component {
 
       newBoard[index] = newBoard[selectedIndex];
       newBoard[index].move();
-      newBoard[selectedIndex] = new EmptyPiece();
+      newBoard[selectedIndex] = null;
 
       whiteTurn = !whiteTurn;
     }
@@ -104,6 +98,7 @@ class App extends React.Component {
       board: newBoard,
       whiteTurn: whiteTurn,
       selectedIndex: -1,
+      candidateMoves: [],
       whiteDeadPieces: deadWhites,
       blackDeadPieces: deadBlacks
     }));
@@ -132,6 +127,7 @@ class App extends React.Component {
         {this.state.gameOver && this.drawGameOverWindow()}
         <Board 
           board = {this.state.board}
+          candidateMoves = {this.state.candidateMoves}
           onClick = {index => this.handleClick(index)}
           gameOver = {this.state.gameOver}
           whiteTurn = {this.state.whiteTurn}

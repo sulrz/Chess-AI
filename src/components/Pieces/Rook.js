@@ -27,7 +27,7 @@ class Rook extends Piece {
                     break;
 
 
-                const candidateTile = board[candidateMove].getPiece();
+                const candidateTile = board[candidateMove];
 
                 if (candidateTile !== null) {
                     if (candidateTile.getAlliance() !== this.getAlliance())

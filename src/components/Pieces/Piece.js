@@ -10,10 +10,6 @@ class Piece {
         this.isCandidate = isCandidateMove;
     }
 
-    getPiece() {
-        return this;
-    }
-
     getAlliance() {
         return this.alliance;
     }

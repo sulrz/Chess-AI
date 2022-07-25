@@ -12,11 +12,12 @@ class Board extends React.Component {
         const index = i*columnsAmount + j;
         const image = this.props.board[index] ?
             this.props.board[index].getImage() : undefined;
+        const isCandidate = this.props.candidateMoves.filter(move => move === i*columnsAmount + j).length > 0;
 
         let canMove = false;
         if (!this.props.gameOver &&
-            (this.props.whiteTurn && this.props.board[index].isWhite()) ||
-            (!this.props.whiteTurn && this.props.board[index].isBlack()))
+            (this.props.whiteTurn && this.props.board[index]?.isWhite()) ||
+            (!this.props.whiteTurn && this.props.board[index]?.isBlack()))
             canMove = true;
 
         return (
@@ -25,7 +26,7 @@ class Board extends React.Component {
                 coordinate = {i + j}
                 image = {image}
                 onClick = {() => this.props.onClick(index)}
-                isCandidate = {this.props.board[index].isCandidate}
+                isCandidate = {isCandidate}
                 canMove = {canMove}
             />
         );

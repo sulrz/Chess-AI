@@ -23,7 +23,7 @@ class Knight extends Piece {
             if (this.isExclusion(position, moveOffsets[i]))
                 continue;
 
-            const candidateTile = board[candidateMove].getPiece();
+            const candidateTile = board[candidateMove];
 
             if (candidateTile === null) {
                 moves.push(candidateMove);

@@ -20,7 +20,7 @@ class Pawn extends Piece {
             if (!this.isValidMove(board, candidateMove))
                 continue;
 
-            const candidateTile = board[candidateMove].getPiece();
+            const candidateTile = board[candidateMove];
 
             if (Math.abs(moveOffsets[i]) === 8 && candidateTile === null) {
                 moves.push(candidateMove);
@@ -29,7 +29,7 @@ class Pawn extends Piece {
             
             if (Math.abs(moveOffsets[i]) === 16 && this.firstMove) {
                 const beforeCandidateTileCoord = position + (this.getDirection() * 8);
-                const beforeCandidateTile = board[beforeCandidateTileCoord].getPiece();
+                const beforeCandidateTile = board[beforeCandidateTileCoord];
                 if (beforeCandidateTile === null &&
                     candidateTile === null) {
 

@@ -1,5 +1,4 @@
 import Bishop from "../Pieces/Bishop";
-import EmptyPiece from "../Pieces/EmptyPiece";
 import King from "../Pieces/King";
 import Knight from "../Pieces/Knight";
 import Pawn from "../Pieces/Pawn";
@@ -12,12 +11,6 @@ const columnsAmount = boardData.columnsAmount;
 
 function BoardInit() {
     const newBoard = Array(64).fill(null);
-
-    for (let i = 0; i < rowsAmount; i++) {
-        for (let j = 0; j < columnsAmount; j++) {
-            newBoard[i*columnsAmount + j] = new EmptyPiece();
-        }
-    }
 
     for (let i = 0; i < rowsAmount; i++) {
         if (i !== 1 && i !== rowsAmount - 2) continue;
