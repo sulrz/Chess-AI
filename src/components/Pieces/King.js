@@ -8,7 +8,7 @@ class King extends Piece {
     }
 
     getMoveOffsets() {
-        return [-9, -8, -7, -1, 1, 7, 8, 9];
+        return [-9, -8, -7, -2, -1, 1, 2, 7, 8, 9];
     }
 
     getMoves(board, position) {
@@ -20,6 +20,37 @@ class King extends Piece {
 
             if (!BoardUtils.isValidMove(candidateMove))
                 continue;
+
+            // left castling
+            if (moveOffsets[i] === -2) {
+                if (this.numberOfMoves > 0 ||
+                    board[position - 1] !== null ||
+                    board[position - 2] !== null ||
+                    board[position - 3] !== null ||
+                    board[position - 4] === null ||
+                    !board[position - 4].isRook() ||
+                    board[position - 4].getAlliance() !== this.getAlliance() ||
+                    board[position - 4].numberOfMoves > 0) 
+                    continue;
+
+                moves.push(candidateMove);
+                continue;
+            }
+            
+            // right castling
+            if (moveOffsets[i] === 2) {
+                if (this.numberOfMoves > 0 ||
+                    board[position + 1] !== null ||
+                    board[position + 2] !== null ||
+                    board[position + 3] === null ||
+                    !board[position + 3].isRook() ||
+                    board[position + 3].getAlliance() !== this.getAlliance() ||
+                    board[position + 3].numberOfMoves > 0) 
+                    continue;
+
+                moves.push(candidateMove);
+                continue;
+            }
 
             if (this.isExclusion(position, moveOffsets[i]))
                 continue;

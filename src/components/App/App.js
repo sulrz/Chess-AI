@@ -21,8 +21,9 @@ class App extends React.Component {
     };
   }
 
-  checkKing() {
-    if (!BoardUtils.areKingsAlive(this.state.board)) {
+  // if either of kings are dead -> game over
+  checkKing(board) {
+    if (!BoardUtils.areKingsAlive(board)) {
       this.setState(prevState => ({
         ...prevState,
         gameOver: true
@@ -34,8 +35,9 @@ class App extends React.Component {
     if (this.state.gameOver) return;
 
     const selectedIndex = this.state.selectedIndex;
-    const newBoard = this.state.board;
+    const newBoard = BoardUtils.copyBoard(this.state.board);
 
+    // if it is a first select click
     if (selectedIndex === -1) {
       if (!newBoard[index]) return;
       if (newBoard[index].isWhite() && !this.state.whiteTurn) return;
@@ -56,6 +58,7 @@ class App extends React.Component {
       return;
     }
 
+    // if it is a move click
     const candidateMoves = newBoard[selectedIndex].getMoves(newBoard, selectedIndex);
     let whiteTurn = this.state.whiteTurn;
 
@@ -63,12 +66,12 @@ class App extends React.Component {
       if (index !== candidateMoves[i])
         continue;
 
-      newBoard[index] = newBoard[selectedIndex];
-      newBoard[index].move();
-      newBoard[selectedIndex] = null;
+      BoardUtils.makeMove(newBoard, selectedIndex, index);
 
       whiteTurn = !whiteTurn;
+      this.checkKing(newBoard);
     }
+    
 
     this.setState(prevState => ({
       ...prevState,
@@ -77,8 +80,6 @@ class App extends React.Component {
       selectedIndex: -1,
       candidateMoves: []
     }));
-
-    this.checkKing();
   }
 
   drawGameOverWindow() {

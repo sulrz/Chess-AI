@@ -50,6 +50,10 @@ class Rook extends Piece {
             return true;
         return false;
     }
+
+    isRook() {
+        return true;
+    }
 }
 
 export default Rook;

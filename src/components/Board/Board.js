@@ -9,7 +9,8 @@ class Board extends React.Component {
         const index = i*BoardUtils.columnsAmount + j;
         const image = this.props.board[index] ?
             this.props.board[index].getImage() : undefined;
-        const isCandidate = this.props.candidateMoves.filter(move => move === i*BoardUtils.columnsAmount + j).length > 0;
+
+        const isCandidate = this.props.candidateMoves.includes(i*BoardUtils.columnsAmount + j);
 
         let canMove = false;
         if (!this.props.gameOver &&

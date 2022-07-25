@@ -2,7 +2,7 @@ class Piece {
     constructor (alliance, imageUrl) {
         this.alliance = alliance;
         this.imageUrl = imageUrl;
-        this.firstMove = true;
+        this.numberOfMoves = 0;
     }
 
     getAlliance() {
@@ -30,7 +30,15 @@ class Piece {
     }
 
     move() {
-        this.firstMove = false;
+        this.numberOfMoves++;
+    }
+
+    isPawn() {
+        return false;
+    }
+
+    isRook() {
+        return false;
     }
 
     isKing() {

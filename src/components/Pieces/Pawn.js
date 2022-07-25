@@ -5,6 +5,8 @@ class Pawn extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_pawn.png`;
         super (alliance, imageUrl);
+
+        this.doubleMoved = false;
     }
 
     getMoveOffsets() {
@@ -28,7 +30,7 @@ class Pawn extends Piece {
                 continue;
             }
             
-            if (Math.abs(moveOffsets[i]) === 16 && this.firstMove) {
+            if (Math.abs(moveOffsets[i]) === 16 && this.numberOfMoves === 0) {
                 const beforeCandidateTileCoord = position + (this.getDirection() * 8);
                 const beforeCandidateTile = board[beforeCandidateTileCoord];
                 if (beforeCandidateTile === null &&
@@ -42,11 +44,23 @@ class Pawn extends Piece {
             if (Math.abs(moveOffsets[i]) === 7 && 
                 !((BoardUtils.isColumnNumberN(1, position) && this.isBlack()) ||
                  (BoardUtils.isColumnNumberN(8, position) && this.isWhite()))) {
-                
+
+                // en passant
+                if (candidateTile === null) {
+                    if (board[position - this.getDirection()] === null ||
+                        board[position - this.getDirection()].getAlliance() === this.getAlliance() ||
+                        board[position - this.getDirection()].numberOfMoves > 1 ||
+                        !board[position - this.getDirection()].doubleMoved) continue;
+
+                    moves.push(candidateMove);
+                    continue;
+                }
+
                 if (candidateTile !== null && 
                     candidateTile.getAlliance() !== this.getAlliance()) {
 
                     moves.push(candidateMove);
+                    continue;
                 }
                 
                 continue;
@@ -55,11 +69,23 @@ class Pawn extends Piece {
             if (Math.abs(moveOffsets[i]) === 9 &&
                 !((BoardUtils.isColumnNumberN(1, position) && this.isWhite()) ||
                  (BoardUtils.isColumnNumberN(8, position) && this.isBlack()))) {
+                     
+                // en passant
+                if (candidateTile === null) {
+                    if (board[position + this.getDirection()] === null ||
+                        board[position + this.getDirection()].getAlliance() === this.getAlliance() ||
+                        board[position + this.getDirection()].numberOfMoves > 1 ||
+                        !board[position + this.getDirection()].doubleMoved) continue;
+
+                    moves.push(candidateMove);
+                    continue;
+                }
 
                 if (candidateTile !== null && 
                     candidateTile.getAlliance() !== this.getAlliance()) {
 
                     moves.push(candidateMove);
+                    continue;
                 }
                 
                 continue;
@@ -67,6 +93,10 @@ class Pawn extends Piece {
         }
 
         return moves;
+    }
+
+    isPawn() {
+        return true;
     }
 }
 
