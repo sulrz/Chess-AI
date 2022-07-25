@@ -61,6 +61,7 @@ class App extends React.Component {
     // if it is a move click
     const candidateMoves = newBoard[selectedIndex].getMoves(newBoard, selectedIndex);
     let whiteTurn = this.state.whiteTurn;
+    let moved = false;
 
     for (let i = 0; i < candidateMoves.length; i++) {
       if (index !== candidateMoves[i])
@@ -70,8 +71,8 @@ class App extends React.Component {
 
       whiteTurn = !whiteTurn;
       this.checkKing(newBoard);
+      moved = true;
     }
-    
 
     this.setState(prevState => ({
       ...prevState,
@@ -79,6 +80,26 @@ class App extends React.Component {
       whiteTurn: whiteTurn,
       selectedIndex: -1,
       candidateMoves: []
+    }), () => {moved && this.moveAI()});
+  }
+
+  moveAI() {
+    if (this.state.gameOver) return;
+
+    const newBoard = BoardUtils.copyBoard(this.state.board);
+    let whiteTurn = this.state.whiteTurn;
+
+    const allMoves = BoardUtils.getAllMoves(newBoard, whiteTurn);
+    const randomMoveIndex = Math.floor(Math.random() * allMoves.length);
+    const randomMove = allMoves[randomMoveIndex];
+    BoardUtils.makeMove(newBoard, randomMove.src, randomMove.dest);
+    
+    this.checkKing(newBoard);
+
+    this.setState(prevState => ({
+      ...prevState,
+      board: newBoard,
+      whiteTurn: !whiteTurn,
     }));
   }
 

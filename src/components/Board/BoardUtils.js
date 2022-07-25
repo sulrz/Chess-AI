@@ -82,15 +82,15 @@ class BoardUtils {
         return newBoard;
     }
 
-    static getAllMoves(board, forWhite) {
+    static getAllMoves(board, whiteTurn) {
         const allMoves = [];
 
         for (let i = 0; i < board.length; i++) {
             if (!board[i]) continue;
 
-            if ((forWhite && board[i].isWhite()) ||
-                (!forWhite && board[i].isBlack())) {
-                board[i].getMoves().forEach(move => allMoves.push(move));
+            if ((whiteTurn && board[i].isWhite()) ||
+                (!whiteTurn && board[i].isBlack())) {
+                board[i].getMoves(board, i).forEach(move => allMoves.push({src: i, dest: move}));
             }
         }
 
