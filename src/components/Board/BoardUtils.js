@@ -20,23 +20,23 @@ class BoardUtils {
             newBoard[i + 48] = new Pawn(white);
         }
 
-        newBoard[0] = new Rook('b');
-        newBoard[1] = new Knight('b');
-        newBoard[2] = new Bishop('b');
-        newBoard[3] = new Queen('b');
-        newBoard[4] = new King('b');
-        newBoard[5] = new Bishop('b');
-        newBoard[6] = new Knight('b');
-        newBoard[7] = new Rook('b');
+        newBoard[0] = new Rook(black);
+        newBoard[1] = new Knight(black);
+        newBoard[2] = new Bishop(black);
+        newBoard[3] = new Queen(black);
+        newBoard[4] = new King(black);
+        newBoard[5] = new Bishop(black);
+        newBoard[6] = new Knight(black);
+        newBoard[7] = new Rook(black);
         
-        newBoard[56] = new Rook('w');
-        newBoard[57] = new Knight('w');
-        newBoard[58] = new Bishop('w');
-        newBoard[59] = new Queen('w');
-        newBoard[60] = new King('w');
-        newBoard[61] = new Bishop('w');
-        newBoard[62] = new Knight('w');
-        newBoard[63] = new Rook('w');
+        newBoard[56] = new Rook(white);
+        newBoard[57] = new Knight(white);
+        newBoard[58] = new Bishop(white);
+        newBoard[59] = new Queen(white);
+        newBoard[60] = new King(white);
+        newBoard[61] = new Bishop(white);
+        newBoard[62] = new Knight(white);
+        newBoard[63] = new Rook(white);
     
         return newBoard;
     }
@@ -95,6 +95,33 @@ class BoardUtils {
         }
 
         return allMoves;
+    }
+
+    static isUnderCheck(board, whiteTurn) {
+        const allMoves = this.getAllMoves(board, !whiteTurn);
+
+        for (let i = 0; i < allMoves.length; i++) {
+            if (!board[allMoves[i].dest]) continue;
+            if (board[allMoves[i].dest].isKing()) return true;
+        }
+
+        return false;
+    }
+
+    static getAllLegalMoves(board, whiteTurn) {
+        const allMoves = this.getAllMoves(board, whiteTurn);
+        const legalMoves = [];
+
+        for (let i = 0; i < allMoves.length; i++) {
+            const copyBoard = this.copyBoard(board);
+
+            this.makeMove(copyBoard, allMoves[i].src, allMoves[i].dest);
+
+            if (!this.isUnderCheck(copyBoard, whiteTurn))
+                legalMoves.push(allMoves[i]);
+        }
+
+        return legalMoves;
     }
 
     static makeMove(board, src, dest) {

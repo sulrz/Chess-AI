@@ -21,13 +21,19 @@ class App extends React.Component {
     };
   }
 
+  setGameOver() {
+    this.setState(prevState => ({
+      ...prevState,
+      gameOver: true
+    }));
+  }
+
   // if either of kings are dead -> game over
-  checkKing(board) {
-    if (!BoardUtils.areKingsAlive(board)) {
-      this.setState(prevState => ({
-        ...prevState,
-        gameOver: true
-      }));
+  checkForGameOver(board) {
+    const legalMoves = BoardUtils.getAllLegalMoves(board, this.state.whiteTurn);
+
+    if (!BoardUtils.areKingsAlive(board) || legalMoves.length === 0) {
+      this.setGameOver();
     }
   }
 
@@ -36,6 +42,8 @@ class App extends React.Component {
 
     const selectedIndex = this.state.selectedIndex;
     const newBoard = BoardUtils.copyBoard(this.state.board);
+    let whiteTurn = this.state.whiteTurn;
+    const legalMoves = BoardUtils.getAllLegalMoves(newBoard, whiteTurn);
 
     // if it is a first select click
     if (selectedIndex === -1) {
@@ -43,7 +51,7 @@ class App extends React.Component {
       if (newBoard[index].isWhite() && !this.state.whiteTurn) return;
       if (newBoard[index].isBlack() &&  this.state.whiteTurn) return;
 
-      const candidateMoves = newBoard[index].getMoves(newBoard, index);
+      const candidateMoves = legalMoves.filter(move => move.src === index).map(move => move.dest);
 
       if (!candidateMoves.length)
         return;
@@ -59,8 +67,8 @@ class App extends React.Component {
     }
 
     // if it is a move click
-    const candidateMoves = newBoard[selectedIndex].getMoves(newBoard, selectedIndex);
-    let whiteTurn = this.state.whiteTurn;
+    const candidateMoves = legalMoves.filter(move => move.src === selectedIndex).map(move => move.dest);
+
     let moved = false;
 
     for (let i = 0; i < candidateMoves.length; i++) {
@@ -70,7 +78,6 @@ class App extends React.Component {
       BoardUtils.makeMove(newBoard, selectedIndex, index);
 
       whiteTurn = !whiteTurn;
-      this.checkKing(newBoard);
       moved = true;
     }
 
@@ -80,7 +87,13 @@ class App extends React.Component {
       whiteTurn: whiteTurn,
       selectedIndex: -1,
       candidateMoves: []
-    }), () => {moved && this.moveAI()});
+    }), () => {
+
+      this.checkForGameOver(this.state.board);
+
+      if (moved)
+        this.moveAI();
+    });
   }
 
   moveAI() {
@@ -89,18 +102,21 @@ class App extends React.Component {
     const newBoard = BoardUtils.copyBoard(this.state.board);
     let whiteTurn = this.state.whiteTurn;
 
-    const allMoves = BoardUtils.getAllMoves(newBoard, whiteTurn);
-    const randomMoveIndex = Math.floor(Math.random() * allMoves.length);
-    const randomMove = allMoves[randomMoveIndex];
+    const legalMoves = BoardUtils.getAllLegalMoves(newBoard, whiteTurn);
+    if (legalMoves.length === 0) {
+      this.setGameOver();
+      return;
+    }
+
+    const randomMoveIndex = Math.floor(Math.random() * legalMoves.length);
+    const randomMove = legalMoves[randomMoveIndex];
     BoardUtils.makeMove(newBoard, randomMove.src, randomMove.dest);
     
-    this.checkKing(newBoard);
-
     this.setState(prevState => ({
       ...prevState,
       board: newBoard,
       whiteTurn: !whiteTurn,
-    }));
+    }), () => {this.checkForGameOver(this.state.board)});
   }
 
   drawGameOverWindow() {
