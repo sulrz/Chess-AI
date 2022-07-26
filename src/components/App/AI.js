@@ -4,6 +4,7 @@ class AI {
 
     static max = 9999999;
     static min = -9999999;
+    static cnt = 0;
 
     static pawnLookupTable = [
         0,  0,  0,  0,  0,  0,  0,  0,
@@ -79,8 +80,11 @@ class AI {
     }
 
     static minimax(board, depth, isWhiteTurn) {
-        if (depth === 0) return this.evaluate(board);
-
+        if (depth === 0) {
+            this.cnt++;
+            return this.evaluate(board);
+        }
+        
         let bestScore = isWhiteTurn ? this.min : this.max;
         let bestMove = this.random(board, isWhiteTurn);
 
@@ -89,7 +93,7 @@ class AI {
             for (let i = 0; i < allMoves.length; i++) {
                 const newBoard = BoardUtils.copyBoard(board);
                 BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimax(board, depth - 1, !isWhiteTurn).bestScore;
+                let score = this.minimax(newBoard, depth - 1, !isWhiteTurn).bestScore;
 
                 if (bestScore < score) {
                     bestScore = score;
@@ -102,7 +106,7 @@ class AI {
             for (let i = 0; i < allMoves.length; i++) {
                 const newBoard = BoardUtils.copyBoard(board);
                 BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimax(board, depth - 1, !isWhiteTurn).bestScore;
+                let score = this.minimax(newBoard, depth - 1, !isWhiteTurn).bestScore;
 
                 if (bestScore > score) {
                     bestScore = score;
@@ -118,7 +122,12 @@ class AI {
     }
 
     static minimaxAB(board, depth, alpha, beta, isWhiteTurn) {
-        if (depth === 0) return {bestScore: this.evaluate(board)};
+        if (depth === 0) {
+            this.cnt++;
+            return this.evaluate(board);
+        }
+        
+        this.cnt++;
 
         let bestScore = isWhiteTurn ? this.min : this.max;
         let bestMove = this.random(board, isWhiteTurn);
