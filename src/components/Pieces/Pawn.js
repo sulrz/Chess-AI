@@ -4,7 +4,10 @@ import BoardUtils from "../Board/BoardUtils";
 class Pawn extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_pawn.png`;
-        super (alliance, imageUrl);
+
+        const value = 100;
+
+        super (alliance, imageUrl, value);
 
         this.doubleMoved = false;
     }

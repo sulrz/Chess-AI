@@ -4,7 +4,10 @@ import BoardUtils from "../Board/BoardUtils";
 class Queen extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_queen.png`;
-        super (alliance, imageUrl);
+
+        const value = 900;
+
+        super (alliance, imageUrl, value);
     }
 
     getMoveOffsets() {
@@ -49,6 +52,10 @@ class Queen extends Piece {
             (BoardUtils.isColumnNumberN(8, position) && (moveOffset === -7 || moveOffset === 1 || moveOffset === 9)))
             return true;
         return false;
+    }
+
+    isQueen() {
+        return true;
     }
 }
 

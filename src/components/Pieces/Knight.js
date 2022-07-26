@@ -4,7 +4,10 @@ import BoardUtils from "../Board/BoardUtils";
 class Knight extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_knight.png`;
-        super (alliance, imageUrl);
+
+        const value = 320;
+        
+        super (alliance, imageUrl, value);
     }
 
     getMoveOffsets() {
@@ -45,6 +48,10 @@ class Knight extends Piece {
             (BoardUtils.isColumnNumberN(8, position) && (moveOffset === -15 || moveOffset === -6 || moveOffset === 10 || moveOffset === 17)))
             return true;
         return false;
+    }
+
+    isKnight() {
+        return true;
     }
 }
 

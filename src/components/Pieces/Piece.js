@@ -1,8 +1,9 @@
 class Piece {
-    constructor (alliance, imageUrl) {
+    constructor (alliance, imageUrl, value) {
         this.alliance = alliance;
         this.imageUrl = imageUrl;
         this.numberOfMoves = 0;
+        this.value = value;
     }
 
     getAlliance() {
@@ -37,7 +38,19 @@ class Piece {
         return false;
     }
 
+    isKnight() {
+        return false;
+    }
+
+    isBishop() {
+        return false;
+    }
+
     isRook() {
+        return false;
+    }
+
+    isQueen() {
         return false;
     }
 

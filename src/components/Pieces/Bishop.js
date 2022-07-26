@@ -4,7 +4,10 @@ import BoardUtils from "../Board/BoardUtils";
 class Bishop extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_bishop.png`;
-        super (alliance, imageUrl);
+
+        const value = 330;
+
+        super (alliance, imageUrl, value);
     }
 
     getMoveOffsets() {
@@ -49,6 +52,10 @@ class Bishop extends Piece {
             (BoardUtils.isColumnNumberN(8, position) && (moveOffset === -7 || moveOffset === 9)))
             return true;
         return false;
+    }
+
+    isBishop() {
+        return true;
     }
 }
 

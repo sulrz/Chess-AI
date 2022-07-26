@@ -3,6 +3,7 @@ import './App.css';
 import Board from '../Board/Board';
 import BoardUtils from '../Board/BoardUtils';
 import GameOverWindow from '../GameOver/GameOverWindow';
+import AI from './AI';
 
 class App extends React.Component {
   constructor() {
@@ -108,9 +109,11 @@ class App extends React.Component {
       return;
     }
 
-    const randomMoveIndex = Math.floor(Math.random() * legalMoves.length);
-    const randomMove = legalMoves[randomMoveIndex];
-    BoardUtils.makeMove(newBoard, randomMove.src, randomMove.dest);
+    // const aiMove = AI.random(newBoard, whiteTurn);
+    // const aiMove = AI.minimax(newBoard, 4, whiteTurn).bestMove;
+    const aiMove = AI.minimaxAB(newBoard, 2, AI.min, AI.max, whiteTurn).bestMove;
+
+    BoardUtils.makeMove(newBoard, aiMove.src, aiMove.dest);
     
     this.setState(prevState => ({
       ...prevState,

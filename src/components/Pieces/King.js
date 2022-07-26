@@ -4,7 +4,10 @@ import BoardUtils from "../Board/BoardUtils";
 class King extends Piece {
     constructor (alliance) {
         let imageUrl = `./images/${alliance}_king.png`;
-        super (alliance, imageUrl);
+
+        const value = 20000;
+
+        super (alliance, imageUrl, value);
     }
 
     getMoveOffsets() {
