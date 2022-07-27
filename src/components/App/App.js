@@ -112,7 +112,8 @@ class App extends React.Component {
     AI.cnt = 0;
     // const aiMove = AI.random(newBoard, whiteTurn);
     // const aiMove = AI.minimax(newBoard, 5, whiteTurn).bestMove;
-    const aiMove = AI.minimaxAB(newBoard, 5, AI.min, AI.max, whiteTurn).bestMove;
+    // const aiMove = AI.helper(newBoard, 3, AI.min, AI.max, whiteTurn);
+    const aiMove = AI.minimaxAB_helper(newBoard, 3, AI.min, AI.max, whiteTurn);
     console.log(AI.cnt);
 
     BoardUtils.makeMove(newBoard, aiMove.src, aiMove.dest);

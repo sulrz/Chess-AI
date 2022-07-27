@@ -86,39 +86,41 @@ class AI {
         }
         
         let bestScore = isWhiteTurn ? this.min : this.max;
+
+        const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
+        for (let i = 0; i < allMoves.length; i++) {
+            const newBoard = BoardUtils.copyBoard(board);
+            BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
+            let score = this.minimax(newBoard, depth - 1, !isWhiteTurn);
+
+            if (isWhiteTurn) {
+                bestScore = Math.max(bestScore, score);
+            }
+            else {
+                bestScore = Math.min(bestScore, score);
+            }
+        }
+
+        return bestScore;
+    }
+
+    static minimaxAB_helper(board, depth, alpha, beta, isWhiteTurn) {
+        let bestScore = isWhiteTurn ? this.min : this.max;
         let bestMove = this.random(board, isWhiteTurn);
-
-        if (isWhiteTurn) {
-            const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
-            for (let i = 0; i < allMoves.length; i++) {
-                const newBoard = BoardUtils.copyBoard(board);
-                BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimax(newBoard, depth - 1, !isWhiteTurn).bestScore;
-
-                if (bestScore < score) {
-                    bestScore = score;
-                    bestMove = allMoves[i];
-                }
-            }
-        }
-        else {
-            const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
-            for (let i = 0; i < allMoves.length; i++) {
-                const newBoard = BoardUtils.copyBoard(board);
-                BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimax(newBoard, depth - 1, !isWhiteTurn).bestScore;
-
-                if (bestScore > score) {
-                    bestScore = score;
-                    bestMove = allMoves[i];
-                }
+        
+        const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
+        for (let i = 0; i < allMoves.length; i++) {
+            const newBoard = BoardUtils.copyBoard(board);
+            BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
+            
+            let score = this.minimaxAB(newBoard, depth - 1, alpha, beta, !isWhiteTurn);
+            if (score <= bestScore) {
+                bestScore = score;
+                bestMove = allMoves[i];
             }
         }
 
-        return {
-            bestScore: bestScore,
-            bestMove: bestMove
-        };
+        return bestMove;
     }
 
     static minimaxAB(board, depth, alpha, beta, isWhiteTurn) {
@@ -127,47 +129,31 @@ class AI {
             return this.evaluate(board);
         }
         
-        this.cnt++;
-
         let bestScore = isWhiteTurn ? this.min : this.max;
-        let bestMove = this.random(board, isWhiteTurn);
 
-        if (isWhiteTurn) {
-            const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
-            for (let i = 0; i < allMoves.length; i++) {
-                const newBoard = BoardUtils.copyBoard(board);
-                BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimaxAB(newBoard, depth - 1, alpha, beta, !isWhiteTurn).bestScore;
+        const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
+        for (let i = 0; i < allMoves.length; i++) {
+            const newBoard = BoardUtils.copyBoard(board);
+            BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
+            let score = this.minimaxAB(newBoard, depth - 1, alpha, beta, !isWhiteTurn);
 
-                if (bestScore < score) {
-                    bestScore = score;
-                    bestMove = allMoves[i];
-                }
+            if (isWhiteTurn) {
+                bestScore = Math.max(bestScore, score);
+                
+                alpha = Math.max(alpha, bestScore);
 
-                if (score >= beta) break;
-                alpha = Math.max(alpha, score);
+                if (bestScore >= beta) return bestScore;
             }
-        }
-        else {
-            const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
-            for (let i = 0; i < allMoves.length; i++) {
-                const newBoard = BoardUtils.copyBoard(board);
-                BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
-                let score = this.minimaxAB(newBoard, depth - 1, alpha, beta, !isWhiteTurn).bestScore;
+            else {
+                bestScore = Math.min(bestScore, score);
+                
+                beta = Math.min(beta, bestScore);
 
-                if (bestScore > score) {
-                    bestScore = score;
-                    bestMove = allMoves[i];
-                }
-                if (score <= alpha) break;
-                beta = Math.min(beta, score);
+                if (bestScore <= alpha) return bestScore;
             }
         }
 
-        return {
-            bestScore: bestScore,
-            bestMove: bestMove
-        };
+        return bestScore;
     }
 
     static evaluate(board) {
@@ -176,17 +162,18 @@ class AI {
         for (let i = 0; i < board.length; i++) {
             if (!board[i]) continue;
 
-            // valueOfBoard += board[i].isWhite() ? board[i].value : -board[i].value;
-            let value = board[i].isWhite() ? 1 : -1;
+            let value = board[i].value;
 
-            if (board[i].isPawn()) value *= this.pawnLookupTable[i];
-            else if (board[i].isKnight()) value *= this.knightLookupTable[i];
-            else if (board[i].isBishop()) value *= this.bishopLookupTable[i];
-            else if (board[i].isRook()) value *= this.rookLookupTable[i];
-            else if (board[i].isQueen()) value *= this.queenLookupTable[i];
-            else if (board[i].isKing()) value *= this.kingLookupTable[i];
+            const index = board[i].isWhite() ? i : board.length - i - 1;
 
-            valueOfBoard += value;
+            if (board[i].isPawn()) value += this.pawnLookupTable[index];
+            else if (board[i].isKnight()) value += this.knightLookupTable[index];
+            else if (board[i].isBishop()) value += this.bishopLookupTable[index];
+            else if (board[i].isRook()) value += this.rookLookupTable[index];
+            else if (board[i].isQueen()) value += this.queenLookupTable[index];
+            else if (board[i].isKing()) value += this.kingLookupTable[index];
+
+            valueOfBoard += board[i].isWhite() ? value : -value;
         }
 
         return valueOfBoard;
