@@ -92,8 +92,11 @@ class App extends React.Component {
 
       this.checkForGameOver(this.state.board);
 
-      if (moved)
-        this.moveAI();
+      if (moved) {
+        setTimeout(() => {
+          this.moveAI();
+        }, 1);
+      }
     });
   }
 
