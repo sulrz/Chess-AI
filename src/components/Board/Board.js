@@ -18,6 +18,12 @@ class Board extends React.Component {
             (!this.props.whiteTurn && this.props.board[index]?.isBlack()))
             canMove = true;
 
+        let underCheck = false;
+        if (this.props.underCheck &&
+            this.props.board[index]?.isKing() &&
+            canMove)
+            underCheck = true;
+
         return (
             <Tile
                 key = {`${i}, ${j}`}
@@ -26,6 +32,7 @@ class Board extends React.Component {
                 onClick = {() => this.props.onClick(index)}
                 isCandidate = {isCandidate}
                 canMove = {canMove}
+                underCheck = {underCheck}
             />
         );
     }

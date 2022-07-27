@@ -153,6 +153,7 @@ class App extends React.Component {
           onClick = {index => this.handleClick(index)}
           gameOver = {this.state.gameOver}
           whiteTurn = {this.state.whiteTurn}
+          underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
          />
       </div>
     );

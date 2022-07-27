@@ -18,6 +18,10 @@
     background-color: #1E7824;
 }
 
+.underCheck {
+    background-color: #c92424;
+}
+
 .clickable {
     cursor: pointer;
 }

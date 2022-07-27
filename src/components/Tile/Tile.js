@@ -14,6 +14,9 @@ function Tile(props) {
     if (props.image && props.canMove)
         className += "clickable ";
 
+    if (props.underCheck)
+        className += "underCheck ";
+
     return (
         <div 
             className = {className} 
