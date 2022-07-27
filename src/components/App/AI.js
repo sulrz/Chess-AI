@@ -108,7 +108,8 @@ class AI {
         let bestScore = isWhiteTurn ? this.min : this.max;
         let bestMove = this.random(board, isWhiteTurn);
         
-        const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
+        const allMoves = BoardUtils.getAllMoves(board, isWhiteTurn);
+        // const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
         for (let i = 0; i < allMoves.length; i++) {
             const newBoard = BoardUtils.copyBoard(board);
             BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
@@ -131,7 +132,8 @@ class AI {
         
         let bestScore = isWhiteTurn ? this.min : this.max;
 
-        const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
+        const allMoves = BoardUtils.getAllMoves(board, isWhiteTurn);
+        // const allMoves = BoardUtils.getAllLegalMoves(board, isWhiteTurn);
         for (let i = 0; i < allMoves.length; i++) {
             const newBoard = BoardUtils.copyBoard(board);
             BoardUtils.makeMove(newBoard, allMoves[i].src, allMoves[i].dest);
