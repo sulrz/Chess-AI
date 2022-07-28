@@ -4,6 +4,7 @@ import Board from '../Board/Board';
 import BoardUtils from '../Board/BoardUtils';
 import GameOverWindow from '../GameOver/GameOverWindow';
 import AI from '../AI/AI';
+import SideWindow from '../SideWindow/SideWindow';
 
 class App extends React.Component {
   constructor() {
@@ -162,6 +163,8 @@ class App extends React.Component {
           underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
           movedPieces = {this.state.movedPieces}
          />
+
+         <SideWindow />
       </div>
     );
   }

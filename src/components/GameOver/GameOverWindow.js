@@ -1,4 +1,5 @@
 import React from "react";
+import './GameOverWindow.css'
 
 function GameOverWindow(props) {
     return (
