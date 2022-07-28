@@ -1,19 +1,19 @@
 .GameOverWindow {
     position: absolute;
 
-    width: min(50vw, 50vh);
-    height: min(30vw, 30vh);
+    width: 55%;
+    height: 30%;
 
     padding-top: 3%;
     
     left: 50%;
-    top: calc(50vh - min(17vw, 17vh));
+    top: 30%;
     transform: translateX(-50%);
     
     border-radius: 5%;
     background-color: #202020;
     text-align: center;
-    font-size: min(3vw, 3vh);
+    font-size: 3vmin;
     color: white;
     opacity: 90%;
     
@@ -22,8 +22,10 @@
 
 .GameOverButton {
     margin-top: 10%;
-    font-size: min(3vw, 3vh);
+    font-size: 3vmin;
     width: 60%;
 
     border-radius: 1vw;
+
+    cursor: pointer;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Board from '../Board/Board';
 import BoardUtils from '../Board/BoardUtils';
-import GameOverWindow from '../GameOver/GameOverWindow';
 import AI from '../AI/AI';
 import SideWindow from '../SideWindow/SideWindow';
 
@@ -135,17 +134,6 @@ class App extends React.Component {
     }), () => {this.checkForGameOver(this.state.board)});
   }
 
-  drawGameOverWindow() {
-    const winner = this.state.whiteTurn ? "Black" : "White";
-
-    return (
-      <GameOverWindow 
-        winner = {winner}
-        onClick = {this.restartGame}
-      />
-    );
-  }
-
   restartGame = () => {
     this.setState(this.getInitialGameState());
   }
@@ -153,7 +141,6 @@ class App extends React.Component {
   render() {
     return (
       <div className='App'>
-        {this.state.gameOver && this.drawGameOverWindow()}
         <Board 
           board = {this.state.board}
           candidateMoves = {this.state.candidateMoves}
@@ -162,9 +149,10 @@ class App extends React.Component {
           whiteTurn = {this.state.whiteTurn}
           underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
           movedPieces = {this.state.movedPieces}
+          restartGame = {this.restartGame}
          />
 
-         <SideWindow />
+         {/* <SideWindow /> */}
       </div>
     );
   }

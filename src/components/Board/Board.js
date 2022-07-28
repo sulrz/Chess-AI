@@ -2,6 +2,7 @@ import React from "react";
 import './Board.css';
 import Tile from "../Tile/Tile";
 import BoardUtils from "./BoardUtils";
+import GameOverWindow from '../GameOver/GameOverWindow';
 
 class Board extends React.Component {
 
@@ -50,10 +51,22 @@ class Board extends React.Component {
 
         return board;
     }
+
+    drawGameOverWindow() {
+        const winner = this.props.whiteTurn ? "Black" : "White";
+    
+        return (
+          <GameOverWindow 
+            winner = {winner}
+            restartGame = {this.props.restartGame}
+          />
+        );
+    }
     
     render() {
         return (
             <div className="Board">
+                {this.props.gameOver && this.drawGameOverWindow()}
                 {this.createBoard()}
             </div>
         );

@@ -8,7 +8,7 @@ function GameOverWindow(props) {
             <h2>{props.winner} won!</h2>
             <button 
                 className="GameOverButton"
-                onClick={props.onClick}
+                onClick={props.restartGame}
             >Play again</button>
         </div>
     );

@@ -1,6 +1,8 @@
 .Board {
-    width: min(85vw, 85vh);
-    height: min(85vw, 85vh);
+    position: relative;
+    
+    width: 85vmin;
+    height: 85vmin;
 
     background-color: black;
 
