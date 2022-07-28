@@ -16,6 +16,9 @@ function Tile(props) {
 
     if (props.underCheck)
         className += "underCheck ";
+    
+    if (props.moved)
+        className += "moved ";
 
     return (
         <div 

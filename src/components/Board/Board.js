@@ -11,6 +11,7 @@ class Board extends React.Component {
             this.props.board[index].getImage() : undefined;
 
         const isCandidate = this.props.candidateMoves.includes(i*BoardUtils.columnsAmount + j);
+        const moved = this.props.movedPieces.includes(i*BoardUtils.columnsAmount + j);
 
         let canMove = false;
         if (!this.props.gameOver &&
@@ -33,6 +34,7 @@ class Board extends React.Component {
                 isCandidate = {isCandidate}
                 canMove = {canMove}
                 underCheck = {underCheck}
+                moved = {moved}
             />
         );
     }

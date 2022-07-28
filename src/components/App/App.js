@@ -3,7 +3,7 @@ import './App.css';
 import Board from '../Board/Board';
 import BoardUtils from '../Board/BoardUtils';
 import GameOverWindow from '../GameOver/GameOverWindow';
-import AI from './AI';
+import AI from '../AI/AI';
 
 class App extends React.Component {
   constructor() {
@@ -18,7 +18,8 @@ class App extends React.Component {
       gameOver: false,
       whiteTurn: true,
       selectedIndex: -1,
-      candidateMoves: []
+      candidateMoves: [],
+      movedPieces: []
     };
   }
 
@@ -71,12 +72,14 @@ class App extends React.Component {
     const candidateMoves = legalMoves.filter(move => move.src === selectedIndex).map(move => move.dest);
 
     let moved = false;
+    let movedPieces = this.state.movedPieces;
 
     for (let i = 0; i < candidateMoves.length; i++) {
       if (index !== candidateMoves[i])
         continue;
 
       BoardUtils.makeMove(newBoard, selectedIndex, index);
+      movedPieces = [selectedIndex, index];
 
       whiteTurn = !whiteTurn;
       moved = true;
@@ -87,7 +90,8 @@ class App extends React.Component {
       board: newBoard,
       whiteTurn: whiteTurn,
       selectedIndex: -1,
-      candidateMoves: []
+      candidateMoves: [],
+      movedPieces: movedPieces
     }), () => {
 
       this.checkForGameOver(this.state.board);
@@ -95,7 +99,7 @@ class App extends React.Component {
       if (moved) {
         setTimeout(() => {
           this.moveAI();
-        }, 1);
+        }, 500);
       }
     });
   }
@@ -120,11 +124,13 @@ class App extends React.Component {
     console.log(AI.cnt);
 
     BoardUtils.makeMove(newBoard, aiMove.src, aiMove.dest);
+    const movedPieces = [aiMove.src, aiMove.dest];
     
     this.setState(prevState => ({
       ...prevState,
       board: newBoard,
       whiteTurn: !whiteTurn,
+      movedPieces: movedPieces
     }), () => {this.checkForGameOver(this.state.board)});
   }
 
@@ -154,6 +160,7 @@ class App extends React.Component {
           gameOver = {this.state.gameOver}
           whiteTurn = {this.state.whiteTurn}
           underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
+          movedPieces = {this.state.movedPieces}
          />
       </div>
     );

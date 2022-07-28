@@ -4,6 +4,7 @@
     height: 100%;
 
     text-align: center;
+    transition: background-color 0.5s;
 }
 
 .black {
@@ -12,10 +13,6 @@
 
 .white {
     background-color: #595959;
-}
-
-.path {
-    background-color: #1E7824;
 }
 
 .underCheck {
@@ -28,6 +25,14 @@
 
 .clickable:hover {
     background-color: #23AD4A;
+}
+
+.moved {
+    background-color: #bf9d52;
+}
+
+.path {
+    background-color: #1E7824;
 }
 
 .Piece {
