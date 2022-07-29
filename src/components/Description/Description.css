@@ -5,14 +5,14 @@
     top: calc(50% - 41vmin);
     left: 13%;
 
-    background-color: gray;
+    background-color: #468530;
     color: white;
 
     text-align: center;
     
     border-radius: 1vw;
 
-    box-shadow: 5px 5px 10px black;
+    box-shadow: 10px 10px 20px black;
 }
 
 h1 {
