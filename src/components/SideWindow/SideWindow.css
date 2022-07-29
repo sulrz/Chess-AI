@@ -82,7 +82,7 @@ select {
 @media screen and (max-width: 1000px) {
     .SideWindow {
         top: 3%;
-        width: 50%;
-        left: 25%;
+        width: 70%;
+        left: 15%;
     }
 }
