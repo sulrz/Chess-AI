@@ -31,6 +31,6 @@
 
     cursor: pointer;
 
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 0.5px 0.5px 1.5px black;
     box-shadow: 2px 2px 3px black;
 }

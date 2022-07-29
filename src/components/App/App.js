@@ -4,6 +4,7 @@ import Board from '../Board/Board';
 import BoardUtils from '../Board/BoardUtils';
 import AI from '../AI/AI';
 import SideWindow from '../SideWindow/SideWindow';
+import Description from '../Description/Description';
 
 class App extends React.Component {
   constructor() {
@@ -166,11 +167,13 @@ class App extends React.Component {
          </div>
 
         <div className='RightScreen'>
-         <SideWindow
-          iterationsNum = {AI.cnt}
-          restartGame = {this.restartGame}
-          searchDepth = {this.state.searchDepth}
-          changeSearchDepth = {this.changeSearchDepth}
+          <Description />
+
+          <SideWindow
+            iterationsNum = {AI.cnt}
+            restartGame = {this.restartGame}
+            searchDepth = {this.state.searchDepth}
+            changeSearchDepth = {this.changeSearchDepth}
           />
         </div>
       </div>

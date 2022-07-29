@@ -5,7 +5,7 @@ function SideWindow(props) {
     return (
         <div className="SideWindow">
             <div className="SideWindow-Block">
-                <h3 className="SideWindow-Header">Select the minimax algorithm search depth:</h3>
+                <h3 className="SideWindow-Header">Select the Minimax algorithm search depth:</h3>
                 <select 
                     label="search-depth" 
                     className="SideWindow-SearchDepth"

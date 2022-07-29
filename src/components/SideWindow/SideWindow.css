@@ -1,8 +1,8 @@
 .SideWindow {
     width: 80%;
-    height: 50%;
+    height: 40%;
     position: relative;
-    top: calc(50% - 41vmin);
+    top: calc(50% - 30vmin);
     left: 13%;
 
     background-color: gray;
@@ -58,7 +58,8 @@ select {
 
     border-radius: 10px;
     width: 40%;
-    height: 25%;
+    height: 30%;
+    font-size: 3vmin;
     text-align: center;
 }
 
@@ -66,7 +67,7 @@ select {
     background-color: #B51F1F;
     color: white;
 
-    margin-top: 15%;
+    margin-top: 5%;
 
     font-size: 3vmin;
     width: 50%;
@@ -80,6 +81,7 @@ select {
 
 @media screen and (max-width: 1000px) {
     .SideWindow {
+        top: 3%;
         width: 50%;
         left: 25%;
     }
