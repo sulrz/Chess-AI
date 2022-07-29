@@ -19,7 +19,8 @@ class App extends React.Component {
       whiteTurn: true,
       selectedIndex: -1,
       candidateMoves: [],
-      movedPieces: []
+      movedPieces: [],
+      searchDepth: 4
     };
   }
 
@@ -37,6 +38,13 @@ class App extends React.Component {
     if (!BoardUtils.areKingsAlive(board) || legalMoves.length === 0) {
       this.setGameOver();
     }
+  }
+
+  changeSearchDepth = event => {
+    this.setState(prevState => ({
+      ...prevState,
+      searchDepth: event.target.value
+    }));
   }
 
   handleClick(index) {
@@ -117,10 +125,13 @@ class App extends React.Component {
     }
 
     AI.cnt = 0;
-    // const aiMove = AI.random(newBoard, whiteTurn);
-    // const aiMove = AI.minimax(newBoard, 5, whiteTurn).bestMove;
-    // const aiMove = AI.helper(newBoard, 3, AI.min, AI.max, whiteTurn);
-    const aiMove = AI.minimaxAB_helper(newBoard, 4, AI.min, AI.max, whiteTurn);
+    let aiMove;
+
+    if (this.state.searchDepth == 0)
+      aiMove = AI.random(newBoard, whiteTurn);
+    else
+      aiMove = AI.minimaxAB_helper(newBoard, this.state.searchDepth, AI.min, AI.max, whiteTurn);
+
     console.log(AI.cnt);
 
     BoardUtils.makeMove(newBoard, aiMove.src, aiMove.dest);
@@ -141,18 +152,27 @@ class App extends React.Component {
   render() {
     return (
       <div className='App'>
-        <Board 
-          board = {this.state.board}
-          candidateMoves = {this.state.candidateMoves}
-          onClick = {index => this.handleClick(index)}
-          gameOver = {this.state.gameOver}
-          whiteTurn = {this.state.whiteTurn}
-          underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
-          movedPieces = {this.state.movedPieces}
-          restartGame = {this.restartGame}
-         />
+        <div className='LeftScreen'>
+          <Board 
+            board = {this.state.board}
+            candidateMoves = {this.state.candidateMoves}
+            onClick = {index => this.handleClick(index)}
+            gameOver = {this.state.gameOver}
+            whiteTurn = {this.state.whiteTurn}
+            underCheck = {BoardUtils.isUnderCheck(this.state.board, this.state.whiteTurn)}
+            movedPieces = {this.state.movedPieces}
+            restartGame = {this.restartGame}
+          />
+         </div>
 
-         {/* <SideWindow /> */}
+        <div className='RightScreen'>
+         <SideWindow
+          iterationsNum = {AI.cnt}
+          restartGame = {this.restartGame}
+          searchDepth = {this.state.searchDepth}
+          changeSearchDepth = {this.changeSearchDepth}
+          />
+        </div>
       </div>
     );
   }

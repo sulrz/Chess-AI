@@ -1,5 +1,8 @@
 .Board {
-    position: relative;
+    position: absolute;
+
+    top: calc(50% - 42vmin);
+    right: calc(50% - 50vmin);
     
     width: 85vmin;
     height: 85vmin;
@@ -9,5 +12,13 @@
     display: grid;
     grid-template-columns: repeat(8, 12.5%);
     grid-template-rows: repeat(8, 12.5%);
+
+    box-shadow: 3px 3px 5px black;
 }
 
+@media screen and (max-width: 1000px) {
+    .Board {
+        top: calc(50% - 42vmin);
+        right: calc(50% - 42vmin);
+    }
+}

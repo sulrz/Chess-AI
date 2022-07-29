@@ -1,10 +1,32 @@
 .App {
-    position: relative;
-
     width: 100vw;
     height: 100vh;
-    
-    display: grid;
-    /* grid-template-columns: 60% 10%; */
-    place-content: center;
+}
+
+.LeftScreen {
+    position: relative;
+    display: inline-block;
+    height: 99%;
+    width: 60%;
+}
+
+.RightScreen {
+    position: relative;
+    float: right;
+    height: 99%;
+    width: 40%;
+    overflow: auto;
+}
+
+@media screen and (max-width: 1000px) {
+    .LeftScreen {
+        width: 100%;
+        height: 100vmin;
+        margin-right: 5px;
+    }
+
+    .RightScreen {
+        width: 100% !important;
+        height: 100%;
+    }
 }

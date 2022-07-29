@@ -1,13 +1,86 @@
 .SideWindow {
+    width: 80%;
+    height: 50%;
     position: relative;
-    display: inline-block;
-    height: 100%;
-    width: 50%;
+    top: calc(50% - 41vmin);
+    left: 13%;
 
-    background-color: white;
+    background-color: gray;
+    color: white;
+
+    text-align: center;
+    
+    border-radius: 1vw;
+
+    box-shadow: 5px 5px 10px black;
 }
 
-@media screen and (max-width: 1100px) {
+.SideWindow-Block {
+    position: relative;
+
+    padding-top: 5%;
+    height: 40%;
+}
+
+.SideWindow-Header {
+    font-size: 3vmin;
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-bottom: 2%;
+
+    text-shadow: 1px 2px 3px black;
+}
+
+.SideWindow-SearchDepth {
+
+}
+
+.SideWindow > label {
+    font-size: 10rem;
+}
+
+input, label, select, option {
+    cursor: pointer;
+}
+
+.SideWindow-Radio {
+    position: relative;
+
+    height: 25%;
+}
+
+input {
+    margin-right: 2%;
+}
+
+select {
+    box-shadow: 2px 2px 3px black;
+
+    border-radius: 10px;
+    width: 40%;
+    height: 25%;
+    text-align: center;
+}
+
+.SideWindow-RestartButton {
+    background-color: #B51F1F;
+    color: white;
+
+    margin-top: 15%;
+
+    font-size: 3vmin;
+    width: 50%;
+    height: 10%;
+
+    border-radius: 1vw;
+    cursor: pointer;
+    text-shadow: 1px 1px 3px black;
+    box-shadow: 2px 2px 3px black;
+}
+
+@media screen and (max-width: 1000px) {
     .SideWindow {
+        width: 50%;
+        left: 25%;
     }
 }

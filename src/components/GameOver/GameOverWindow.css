@@ -18,6 +18,8 @@
     opacity: 90%;
     
     z-index: 1;
+
+    text-shadow: 1px 1px 3px black;
 }
 
 .GameOverButton {
@@ -28,4 +30,7 @@
     border-radius: 1vw;
 
     cursor: pointer;
+
+    text-shadow: 1px 1px 3px black;
+    box-shadow: 2px 2px 3px black;
 }
