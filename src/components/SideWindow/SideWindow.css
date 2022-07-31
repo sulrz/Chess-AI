@@ -85,4 +85,8 @@ select {
         width: 70%;
         left: 15%;
     }
+
+    .SideWindow-RestartButton {
+        margin-top: 0%;
+    }
 }

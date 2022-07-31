@@ -128,7 +128,7 @@ class App extends React.Component {
     AI.cnt = 0;
     let aiMove;
 
-    if (this.state.searchDepth == 0)
+    if (this.state.searchDepth === "0")
       aiMove = AI.random(newBoard, whiteTurn);
     else
       aiMove = AI.minimaxAB_helper(newBoard, this.state.searchDepth, AI.min, AI.max, whiteTurn);
